@@ -31,8 +31,9 @@ type EventFormProps = {
 }
 
 const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
-  const [files, setFiles] = useState<File[]>([])
 
+  console.log('EventFormProps', { userId, type, event, eventId })
+  const [files, setFiles] = useState<File[]>([])
   const initialValues = event && type === 'Update' 
     ? { 
       ...event, 
@@ -118,7 +119,6 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
               </FormItem>
             )}
           />
-          {/* Category dropdown */}
           <FormField
             control={form.control}
             name="categoryId"
@@ -133,7 +133,6 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
           />
         </div>
 
-        {/* Description and Image upload */}
         <div className="flex flex-col gap-5 md:flex-row">
           <FormField
               control={form.control}
@@ -153,7 +152,6 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormControl className="h-72">
-                    {/* pass 3 paramaters to fileuploader component*/}
                     <FileUploader 
                       onFieldChange={field.onChange}
                       imageUrl={field.value}

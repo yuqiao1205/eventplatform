@@ -2,9 +2,13 @@ import EventForm from "@/components/shared/EventForm"
 import { auth } from "@clerk/nextjs/server";
 
 const CreateEvent = () => {
-  const { sessionClaims } = auth();
-   // get the user id from the session
-  const userId = sessionClaims?.userId as string;
+  console.log('CreateEvent')
+  // const { sessionClaims } = auth();
+  // const userId = sessionClaims?.userId as string;
+  const { userId } : { userId: string | null } = auth();
+
+  // console.log('CreateEvent -> sessionClaims', sessionClaims)
+  console.log('CreateEvent -> userId', userId)
 
   return (
     <>
@@ -14,7 +18,7 @@ const CreateEvent = () => {
 
       <div className="wrapper my-8">
         {/* createEvent is parent component 父传子，把userid绑定过 来*/}
-        <EventForm userId={userId} type="Create" />
+        <EventForm userId={userId!} type="Create" />
       </div>
     </>
   )

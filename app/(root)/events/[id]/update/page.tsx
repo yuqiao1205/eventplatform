@@ -1,10 +1,22 @@
+
 import EventForm from "@/components/shared/EventForm"
+import { getEventById } from "@/lib/actions/event.actions"
 import { auth } from "@clerk/nextjs/server";
 
-const UpdateEvent = () => {
-  const { sessionClaims } = auth();
-   // get the user id from the session
-  const userId = sessionClaims?.userId as string;
+type UpdateEventProps = {
+  params: {
+    id: string
+  }
+}
+
+const UpdateEvent = async ({ params: { id } }: UpdateEventProps) => {
+  // const { sessionClaims } = auth();
+  // console.log('UpdateEvent -> id', id)
+
+  const { userId } : { userId: string | null } = auth();
+  console.log('UpdateEvent -> userId', userId)
+  // const userId = sessionClaims?.userId as string;
+  const event = await getEventById(id)
 
   return (
     <>
@@ -13,8 +25,12 @@ const UpdateEvent = () => {
       </section>
 
       <div className="wrapper my-8">
-        {/* createEvent is parent component 父传子，把userid绑定过 来*/}
-        <EventForm userId={userId} type="Update" />
+        <EventForm 
+          type="Update" 
+          event={event} 
+          eventId={event._id} 
+          userId={userId!} 
+        />
       </div>
     </>
   )
